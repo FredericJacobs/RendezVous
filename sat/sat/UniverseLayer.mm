@@ -395,6 +395,20 @@ enum {
 	world->Step(dt, velocityIterations, positionIterations);	
 }
 
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	if ([touches count] == 1) {
+		//Add a new body/atlas sprite at the touched location
+		for( UITouch *touch in touches ) {
+			CGPoint location = [touch locationInView: [touch view]];
+		
+			location = [[CCDirector sharedDirector] convertToGL: location];
+		
+			[self addNewSpriteAtPosition: location];
+		}
+	}
+}
+
 -(void) dealloc
 {
 	delete world;
