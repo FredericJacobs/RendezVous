@@ -57,6 +57,7 @@ enum {
 		[self scheduleUpdate];
 		earth = [CCSprite spriteWithFile:@"earth.png"];
 		earth.scale = 0.3;
+		earth.anchorPoint = CGPointMake(0, 0);
 		earth.position = CGPointMake([UIScreen mainScreen].bounds.size.height/2 - earth.boundingBox.size.height/2, [UIScreen mainScreen].bounds.size.width/2 - earth.boundingBox.size.width/2);
 		[self addChild:earth];
 		
