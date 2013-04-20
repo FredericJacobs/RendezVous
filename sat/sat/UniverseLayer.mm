@@ -55,11 +55,6 @@ enum {
 		[self initPhysics];
 
 		[self scheduleUpdate];
-		earth = [CCSprite spriteWithFile:@"earth.png"];
-		earth.scale = 0.3;
-		earth.anchorPoint = CGPointMake(0, 0);
-		earth.position = CGPointMake([UIScreen mainScreen].bounds.size.height/2 - earth.boundingBox.size.height/2, [UIScreen mainScreen].bounds.size.width/2 - earth.boundingBox.size.width/2);
-		[self addChild:earth];
 		
         CGRect boundingRect = CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
 	
@@ -73,16 +68,134 @@ enum {
 	return self;
 }
 
--(void) dealloc
-{
-	delete world;
-	world = NULL;
-	
-	delete m_debugDraw;
-	m_debugDraw = NULL;
-	
-	[super dealloc];
-}
+/*TODO: port from the flash
+ package {
+ import flash.display.*;
+ import flash.events.Event;
+ import flash.events.MouseEvent;
+ import Box2D.Dynamics.*;
+ import Box2D.Collision.*;
+ import Box2D.Collision.Shapes.*;
+ import Box2D.Common.Math.*;
+ import Box2D.Dynamics.Joints.*;
+ import flash.sampler.NewObjectSample;
+ // extra http://www.mvfusion.nl/orbital-gravity-code-sample/
+ // all code was provided through
+ //
+ // http://www.emanueleferonato.com/2012/03/28/simulate-radial-gravity-also-know-as-planet-gravity-with-box2d-as-seen-on-angry-birds-space/
+ //
+ // So Emanuele Feronato is getting credit for all code. I just added some extra stuff in the update loop to make orbits possible at most speeds...
+ 
+ public class Main extends Sprite {
+ private var world:b2World=new b2World(new b2Vec2(0,0),true);
+ private var worldScale:Number=30;
+ private var planetVector:Vector.=new Vector.();
+ private var debrisVector:Vector.=new Vector.();
+ private var orbitCanvas:Sprite=new Sprite();
+ private var oldDistance:Number = 0 ;
+ private var newSprite:Sprite;
+ private var doMoveLeft:Boolean = false;
+ private var flt:Number = 0;
+ public function Main() {
+ addChild(orbitCanvas);
+ orbitCanvas.graphics.lineStyle(1,0xff0000);
+ debugDraw();
+ addPlanet(400,300,90);//90
+ //addPlanet(800,300,45);//90
+ //addPlanet(480,120,45);
+ addEventListener(Event.ENTER_FRAME,update);
+ stage.addEventListener(MouseEvent.CLICK,createDebris);
+ 
+ 
+ newSprite = new Sprite();
+ addChild(newSprite);
+ var mn:moveLeft = new moveLeft();
+ addChild(mn);
+ mn.addEventListener(MouseEvent.CLICK, goLeft);
+ 
+ }
+ private function goLeft(e:MouseEvent):void{
+ trace("click");
+ doMoveLeft = !doMoveLeft;
+ }
+ private function createDebris(e:MouseEvent):void {
+ addBox(mouseX,mouseY,20,20);
+ trace(mouseX, mouseY);
+ newSprite.graphics.clear();
+ 
+ }
+ 
+ 
+ 
+ private function convertToRange( OldValue :Number , OldMin :Number , OldMax :Number , NewMin :Number , NewMax:Number ) :Number
+ {
+ 
+ var res:Number = (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin;
+ if(OldMin == 0 && OldMax == 0){
+ res = 0.0;
+ }
+ return res;
+ 
+ }
+ private function update(e:Event):void {
+ world.Step(1/60, 10, 10);
+ world.ClearForces();
+ 
+ for (var i:int=0; i debrisVector[i].GetLinearVelocity().Length()){
+ var verschil2:Number = (debrisVector[i].GetUserData().oldvel - debrisVector[i].GetLinearVelocity().Length()) * 1.0;
+ 
+ var newF:b2Vec2 = new b2Vec2(F.x * (debrisVector[i].GetLinearVelocity().Length() * (verschil2 * 2)),
+ F.y * (debrisVector[i].GetLinearVelocity().Length() * (verschil2 * 2)));
+ 
+ //compare previous distance with new current distance...if the difference is higher, that means, we are going up
+ //again, which is NOT what we want. That will give an annoying elastic effect and will make body escape from planet.
+ var diffDistance:Number = debrisVector[i].GetUserData().oldDis - finalDistance;
+ 
+ if(diffDistance > 0){
+ //red = we must apply some add. force to make sure body goes back to planet.
+ //BTW, here one must add some extra code to compare last velocity and current velocity, to make sure
+ //we eliminate small hicks...
+ var subf:b2Vec2 = new b2Vec2(newF.x * gravityStrenght , newF.y * gravityStrenght );
+ SUPERFORCE.Add(subf);
+ }
+ 
+ var mm2:Number = convertToRange(speedD , 0, 45, 2,3);
+ var dampvalue2:Number = i2*0.0314 / mm2 * speedD/i2;
+ 
+ debrisVector[i].SetLinearDamping(dampvalue2*2 );
+ 
+ if(diffDistance < -0.0){
+ //orange = body goes up...so dont apply anti force!
+ newSprite.graphics.beginFill(0xFF9900);
+ newSprite.graphics.drawCircle(debrisVector[i].GetPosition().x * worldScale, debrisVector[i].GetPosition().y * worldScale, 2);
+ newSprite.graphics.endFill();
+ 
+ }
+ else{
+ //red = body needs to be forced someway...
+ newSprite.graphics.beginFill(0xFF0000);
+ newSprite.graphics.drawCircle(debrisVector[i].GetPosition().x * worldScale, debrisVector[i].GetPosition().y * worldScale, 2);
+ newSprite.graphics.endFill();
+ }
+ }
+ else{
+ newSprite.graphics.beginFill(0x00FF00);
+ newSprite.graphics.drawCircle(debrisVector[i].GetPosition().x * worldScale, debrisVector[i].GetPosition().y * worldScale, 2);
+ newSprite.graphics.endFill();
+ }
+ 
+ debrisVector[i].ApplyForce(SUPERFORCE, debrisVector[i].GetWorldCenter());
+ //store old data into variable, usefull to compare in loop
+ debrisVector[i].GetUserData().oldvel = debrisVector[i].GetLinearVelocity().Length();
+ debrisVector[i].GetUserData().oldDis = finalDistance;
+ }
+ }
+ }
+ world.DrawDebugData();
+ }
+ }
+ }
+ */
 
 -(void) initPhysics
 {
@@ -90,7 +203,7 @@ enum {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
 	b2Vec2 gravity;
-	gravity.Set(0.0f, -10.0f);
+	gravity.Set(0.0f, 0.0f);
 	world = new b2World(gravity);
 	
 	
@@ -139,7 +252,133 @@ enum {
 	// right
 	groundBox.Set(b2Vec2(s.width/PTM_RATIO,s.height/PTM_RATIO), b2Vec2(s.width/PTM_RATIO,0));
 	groundBody->CreateFixture(&groundBox,0);
+	
+	_satellites = [[NSMutableArray alloc] init];
+	_worldScale=1;
+	
+	[self addPlanet:9 yCoord:5  radius:3];
 }
+
+-(void) draw
+{
+	//
+	// IMPORTANT:
+	// This is only for debug purposes
+	// It is recommend to disable it
+	//
+	[super draw];
+	
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+	
+	kmGLPushMatrix();
+	
+	world->DrawDebugData();
+	
+	kmGLPopMatrix();
+}
+
+-(void)addPlanet:(float)pX yCoord:(float)pY radius:(float)r {
+	b2FixtureDef fixtureDef;
+	fixtureDef.restitution=0;
+	fixtureDef.density = 1;
+	b2CircleShape circleShape;
+	circleShape.m_radius = r/_worldScale;
+	fixtureDef.shape = &circleShape;
+	
+	b2BodyDef bodyDef;
+	
+	b2Vec2 planetCoords;
+	planetCoords.x = pX/_worldScale;
+	planetCoords.y= pY/_worldScale;
+	
+	bodyDef.position=planetCoords;
+	b2Body *thePlanet = world->CreateBody(&bodyDef);
+	PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:@"Earth.png"];
+
+	sprite.position=ccp(pX/_worldScale,pY/_worldScale);
+	[sprite setPhysicsBody:thePlanet];
+	[_planets addObject:sprite];
+	thePlanet->CreateFixture(&fixtureDef);
+	
+}
+
+-(void)addBox:(float)pX yCoord:(float)pY wVal:(float)w hVal:(float)h {
+	b2CircleShape polygonShape;
+	polygonShape.m_radius = w/_worldScale/2;
+	b2FixtureDef fixtureDef;
+	fixtureDef.restitution=0.1;
+	fixtureDef.density = 1;
+	fixtureDef.friction=1;
+	fixtureDef.shape=&polygonShape;
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	b2Vec2 satCoords;
+	satCoords.x = pX/_worldScale;
+	satCoords.y= pY/_worldScale;
+	bodyDef.position =satCoords;
+	b2Body *theSat = world->CreateBody(&bodyDef);
+	//  newobject.oldvel = 0;
+	//  newobject.velchange = 0;
+	//  newobject.oldDis = 0;
+	//  box.SetUserData(newobject);
+	//theSat->SetUserData(<#void *data#>);
+	b2Vec2 force;
+	satCoords.x = 400;
+	satCoords.y= 0;
+	b2Vec2 center;
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	center.x=s.height;
+	center.y=s.width;
+	theSat->ApplyForce(force, center);
+	theSat->CreateFixture(&fixtureDef);
+	//  var box:b2Body=world.CreateBody(bodyDef);
+	//
+	//  var newobject:Object = new Object();
+	
+	//  debrisVector.push(box);
+	//  box.ApplyForce(new b2Vec2(400,0), box.GetWorldCenter());
+	//
+	//  box.CreateFixture(fixtureDef);
+}
+
+
+//-(void) addNewSpriteAtPosition:(CGPoint)p {
+//  [self addBox:p.x yCoord:p.y wVal:20 hVal:20];
+//}
+-(void) addNewSpriteAtPosition:(CGPoint)p
+{
+	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
+	CCNode *parent = [self getChildByTag:kTagParentNode];
+	
+	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
+	//just randomly picking one of the images
+	PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:@"Earth.png"];
+	[parent addChild:sprite];
+	
+	sprite.position = ccp( p.x, p.y);
+	
+	// Define the dynamic body.
+	//Set up a 1m squared box in the physics world
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+	b2Body *body = world->CreateBody(&bodyDef);
+	
+	// Define another box shape for our dynamic body.
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+	
+	// Define the dynamic body fixture.
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.3f;
+	body->CreateFixture(&fixtureDef);
+	
+	[sprite setPhysicsBody:body];
+}
+
+
 
 -(void) update: (ccTime) dt
 {
@@ -154,6 +393,17 @@ enum {
 	// Instruct the world to perform a single step of simulation. It is
 	// generally best to keep the time step and iterations fixed.
 	world->Step(dt, velocityIterations, positionIterations);	
+}
+
+-(void) dealloc
+{
+	delete world;
+	world = NULL;
+	
+	delete m_debugDraw;
+	m_debugDraw = NULL;
+	
+	[super dealloc];
 }
 
 @end
