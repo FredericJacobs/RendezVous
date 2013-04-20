@@ -34,7 +34,6 @@
 @property (nonatomic) float oldDistance;
 @property (nonatomic,strong) PhysicsSprite *orbitCanvas;
 @property (nonatomic) BOOL doMoveLeft;
-@property (nonatomic) int worldScale;
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;
 

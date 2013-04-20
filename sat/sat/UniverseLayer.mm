@@ -217,46 +217,11 @@ enum {
 	
 	uint32 flags = 0;
 	flags += b2Draw::e_shapeBit;
-	//		flags += b2Draw::e_jointBit;
-	//		flags += b2Draw::e_aabbBit;
-	//		flags += b2Draw::e_pairBit;
-	//		flags += b2Draw::e_centerOfMassBit;
-	m_debugDraw->SetFlags(flags);		
-	
-	
-	// Define the ground body.
-	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0, 0); // bottom-left corner
-	
-	// Call the body factory which allocates memory for the ground body
-	// from a pool and creates the ground box shape (also from a pool).
-	// The body is also added to the world.
-	b2Body* groundBody = world->CreateBody(&groundBodyDef);
-	
-	// Define the ground box shape.
-	b2EdgeShape groundBox;		
-	
-	// bottom
-	
-	groundBox.Set(b2Vec2(0,0), b2Vec2(s.width/PTM_RATIO,0));
-	groundBody->CreateFixture(&groundBox,0);
-	
-	// top
-	groundBox.Set(b2Vec2(0,s.height/PTM_RATIO), b2Vec2(s.width/PTM_RATIO,s.height/PTM_RATIO));
-	groundBody->CreateFixture(&groundBox,0);
-	
-	// left
-	groundBox.Set(b2Vec2(0,s.height/PTM_RATIO), b2Vec2(0,0));
-	groundBody->CreateFixture(&groundBox,0);
-	
-	// right
-	groundBox.Set(b2Vec2(s.width/PTM_RATIO,s.height/PTM_RATIO), b2Vec2(s.width/PTM_RATIO,0));
-	groundBody->CreateFixture(&groundBox,0);
+	m_debugDraw->SetFlags(flags);
 	
 	_satellites = [[NSMutableArray alloc] init];
-	_worldScale=1;
 	
-	[self addPlanet:9 yCoord:5  radius:3];
+	[self addPlanet:s.width/2 yCoord:s.height/2  radius:s.width/20];
 }
 
 -(void) draw
@@ -282,20 +247,20 @@ enum {
 	fixtureDef.restitution=0;
 	fixtureDef.density = 1;
 	b2CircleShape circleShape;
-	circleShape.m_radius = r/_worldScale;
+	circleShape.m_radius = r/PTM_RATIO;
 	fixtureDef.shape = &circleShape;
 	
 	b2BodyDef bodyDef;
 	
 	b2Vec2 planetCoords;
-	planetCoords.x = pX/_worldScale;
-	planetCoords.y= pY/_worldScale;
+	planetCoords.x = pX/PTM_RATIO;
+	planetCoords.y= pY/PTM_RATIO;
 	
 	bodyDef.position=planetCoords;
 	b2Body *thePlanet = world->CreateBody(&bodyDef);
 	PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:@"Earth.png"];
 
-	sprite.position=ccp(pX/_worldScale,pY/_worldScale);
+	sprite.position=ccp(pX/PTM_RATIO,pY/PTM_RATIO);
 	[sprite setPhysicsBody:thePlanet];
 	[_planets addObject:sprite];
 	thePlanet->CreateFixture(&fixtureDef);
@@ -304,7 +269,7 @@ enum {
 
 -(void)addBox:(float)pX yCoord:(float)pY wVal:(float)w hVal:(float)h {
 	b2CircleShape polygonShape;
-	polygonShape.m_radius = w/_worldScale/2;
+	polygonShape.m_radius = w/PTM_RATIO/2;
 	b2FixtureDef fixtureDef;
 	fixtureDef.restitution=0.1;
 	fixtureDef.density = 1;
@@ -313,8 +278,8 @@ enum {
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	b2Vec2 satCoords;
-	satCoords.x = pX/_worldScale;
-	satCoords.y= pY/_worldScale;
+	satCoords.x = pX/PTM_RATIO;
+	satCoords.y= pY/PTM_RATIO;
 	bodyDef.position =satCoords;
 	b2Body *theSat = world->CreateBody(&bodyDef);
 	//  newobject.oldvel = 0;
@@ -323,8 +288,8 @@ enum {
 	//  box.SetUserData(newobject);
 	//theSat->SetUserData(<#void *data#>);
 	b2Vec2 force;
-	satCoords.x = 400;
-	satCoords.y= 0;
+	force.x = 400;
+	force.y= 0;
 	b2Vec2 center;
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	center.x=s.height;
@@ -345,38 +310,44 @@ enum {
 //-(void) addNewSpriteAtPosition:(CGPoint)p {
 //  [self addBox:p.x yCoord:p.y wVal:20 hVal:20];
 //}
--(void) addNewSpriteAtPosition:(CGPoint)p
-{
-	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCNode *parent = [self getChildByTag:kTagParentNode];
-	
-	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
-	//just randomly picking one of the images
-	PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:@"Earth.png"];
-	[parent addChild:sprite];
-	
-	sprite.position = ccp( p.x, p.y);
-	
-	// Define the dynamic body.
-	//Set up a 1m squared box in the physics world
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
-	b2Body *body = world->CreateBody(&bodyDef);
-	
-	// Define another box shape for our dynamic body.
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
-	
-	// Define the dynamic body fixture.
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.density = 1.0f;
-	fixtureDef.friction = 0.3f;
-	body->CreateFixture(&fixtureDef);
-	
-	[sprite setPhysicsBody:body];
-}
+  -(void) addNewSpriteAtPosition:(CGPoint)p{
+    CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
+    CCNode *parent = [self getChildByTag:kTagParentNode];
+    
+    PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:@"Earth.png"];
+    [parent addChild:sprite];
+    
+    sprite.position = ccp( p.x, p.y);
+    
+    // Define the dynamic body.
+    //Set up a 1m squared box in the physics world
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+    b2Body *body = world->CreateBody(&bodyDef);
+    
+    // Define another box shape for our dynamic body.
+    b2PolygonShape dynamicBox;
+    dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+    
+    // Define the dynamic body fixture.
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &dynamicBox;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+    body->CreateFixture(&fixtureDef);
+    
+    // actually apply a force!
+    b2Vec2 force;
+    force.x = 400;
+    force.y= 0;
+    b2Vec2 center;
+    CGSize s = [[CCDirector sharedDirector] winSize];
+    center.x=s.height;
+    center.y=s.width;
+    body->ApplyForce(force, center);
+    [sprite setPhysicsBody:body];
+  }
 
 
 
