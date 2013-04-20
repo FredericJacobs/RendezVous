@@ -176,11 +176,14 @@
 		A5C072201722D0850004217F /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5C0721F1722D0850004217F /* b2Rope.cpp */; };
 		A5C072261722D0850004217F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A5C072251722D0850004217F /* main.m */; };
 		A5C072291722D0850004217F /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5C072281722D0850004217F /* AppDelegate.mm */; };
-		A5C0722C1722D0850004217F /* HelloWorldLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5C0722B1722D0850004217F /* HelloWorldLayer.mm */; };
+		A5C0722C1722D0850004217F /* UniverseLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5C0722B1722D0850004217F /* UniverseLayer.mm */; };
 		A5C0722F1722D0850004217F /* IntroLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5C0722E1722D0850004217F /* IntroLayer.mm */; };
 		A5C072321722D0850004217F /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5C072311722D0850004217F /* GLES-Render.mm */; };
 		A5C072351722D0850004217F /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5C072341722D0850004217F /* PhysicsSprite.mm */; };
 		A5C072371722D0850004217F /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072361722D0850004217F /* blocks.png */; };
+		B6907C3D1722DE3D0070EA28 /* earth.png in Resources */ = {isa = PBXBuildFile; fileRef = B6907C3C1722DE3D0070EA28 /* earth.png */; };
+		B6907C401722F23E0070EA28 /* CCPanZoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */; };
+		B6907C421722F4260070EA28 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B6907C411722F4260070EA28 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -536,8 +539,8 @@
 		A5C072251722D0850004217F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A5C072271722D0850004217F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A5C072281722D0850004217F /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		A5C0722A1722D0850004217F /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		A5C0722B1722D0850004217F /* HelloWorldLayer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloWorldLayer.mm; sourceTree = "<group>"; };
+		A5C0722A1722D0850004217F /* UniverseLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UniverseLayer.h; sourceTree = "<group>"; };
+		A5C0722B1722D0850004217F /* UniverseLayer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = UniverseLayer.mm; sourceTree = "<group>"; };
 		A5C0722D1722D0850004217F /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		A5C0722E1722D0850004217F /* IntroLayer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IntroLayer.mm; sourceTree = "<group>"; };
 		A5C072301722D0850004217F /* GLES-Render.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GLES-Render.h"; sourceTree = "<group>"; };
@@ -545,6 +548,10 @@
 		A5C072331722D0850004217F /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
 		A5C072341722D0850004217F /* PhysicsSprite.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
 		A5C072361722D0850004217F /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blocks.png; path = Resources/blocks.png; sourceTree = "<group>"; };
+		B6907C3C1722DE3D0070EA28 /* earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth.png; sourceTree = "<group>"; };
+		B6907C3E1722F23E0070EA28 /* CCPanZoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPanZoomController.h; sourceTree = "<group>"; };
+		B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPanZoomController.m; sourceTree = "<group>"; };
+		B6907C411722F4260070EA28 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -570,6 +577,7 @@
 		A5C06FFE1722D0810004217F = {
 			isa = PBXGroup;
 			children = (
+				B6907C411722F4260070EA28 /* Default-568h@2x.png */,
 				A5C0701C1722D0810004217F /* sat */,
 				A5C070091722D0810004217F /* Frameworks */,
 				A5C070081722D0810004217F /* Products */,
@@ -603,10 +611,13 @@
 		A5C0701C1722D0810004217F /* sat */ = {
 			isa = PBXGroup;
 			children = (
+				B6907C431722FBE10070EA28 /* Sprites */,
+				B6907C3E1722F23E0070EA28 /* CCPanZoomController.h */,
+				B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */,
 				A5C072271722D0850004217F /* AppDelegate.h */,
 				A5C072281722D0850004217F /* AppDelegate.mm */,
-				A5C0722A1722D0850004217F /* HelloWorldLayer.h */,
-				A5C0722B1722D0850004217F /* HelloWorldLayer.mm */,
+				A5C0722A1722D0850004217F /* UniverseLayer.h */,
+				A5C0722B1722D0850004217F /* UniverseLayer.mm */,
 				A5C0722D1722D0850004217F /* IntroLayer.h */,
 				A5C0722E1722D0850004217F /* IntroLayer.mm */,
 				A5C072301722D0850004217F /* GLES-Render.h */,
@@ -1142,6 +1153,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B6907C431722FBE10070EA28 /* Sprites */ = {
+			isa = PBXGroup;
+			children = (
+				B6907C3C1722DE3D0070EA28 /* earth.png */,
+			);
+			name = Sprites;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1206,6 +1225,8 @@
 				A5C070361722D0820004217F /* iTunesArtwork in Resources */,
 				A5C071741722D0840004217F /* ChangeLog in Resources */,
 				A5C072371722D0850004217F /* blocks.png in Resources */,
+				B6907C3D1722DE3D0070EA28 /* earth.png in Resources */,
+				B6907C421722F4260070EA28 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1363,10 +1384,11 @@
 				A5C072201722D0850004217F /* b2Rope.cpp in Sources */,
 				A5C072261722D0850004217F /* main.m in Sources */,
 				A5C072291722D0850004217F /* AppDelegate.mm in Sources */,
-				A5C0722C1722D0850004217F /* HelloWorldLayer.mm in Sources */,
+				A5C0722C1722D0850004217F /* UniverseLayer.mm in Sources */,
 				A5C0722F1722D0850004217F /* IntroLayer.mm in Sources */,
 				A5C072321722D0850004217F /* GLES-Render.mm in Sources */,
 				A5C072351722D0850004217F /* PhysicsSprite.mm in Sources */,
+				B6907C401722F23E0070EA28 /* CCPanZoomController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1480,6 +1502,7 @@
 				A5C0723C1722D0850004217F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
