@@ -22,7 +22,7 @@
 @interface UniverseLayer : CCLayer
 {
 	CCTexture2D *spriteTexture_;	// weak ref
-	b2World* world;
+	b2World *world;
 	CCSprite *earth;
 	CCPanZoomController *_controller;
 	GLESDebugDraw *m_debugDraw;		// strong ref
