@@ -181,6 +181,11 @@
 		A5C072321722D0850004217F /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5C072311722D0850004217F /* GLES-Render.mm */; };
 		A5C072351722D0850004217F /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5C072341722D0850004217F /* PhysicsSprite.mm */; };
 		A5C072371722D0850004217F /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072361722D0850004217F /* blocks.png */; };
+		A5C072471723E15E0004217F /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072421723E15E0004217F /* background.png */; };
+		A5C072481723E15E0004217F /* bigbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072431723E15E0004217F /* bigbackground.png */; };
+		A5C072491723E15E0004217F /* earth.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072441723E15E0004217F /* earth.png */; };
+		A5C0724A1723E15E0004217F /* iss.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072451723E15E0004217F /* iss.png */; };
+		A5C0724B1723E15E0004217F /* satellite1.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072461723E15E0004217F /* satellite1.png */; };
 		B6907C3D1722DE3D0070EA28 /* earth.png in Resources */ = {isa = PBXBuildFile; fileRef = B6907C3C1722DE3D0070EA28 /* earth.png */; };
 		B6907C401722F23E0070EA28 /* CCPanZoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */; };
 		B6907C421722F4260070EA28 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B6907C411722F4260070EA28 /* Default-568h@2x.png */; };
@@ -548,6 +553,11 @@
 		A5C072331722D0850004217F /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
 		A5C072341722D0850004217F /* PhysicsSprite.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
 		A5C072361722D0850004217F /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blocks.png; path = Resources/blocks.png; sourceTree = "<group>"; };
+		A5C072421723E15E0004217F /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = Resources/RDVasset/background.png; sourceTree = "<group>"; };
+		A5C072431723E15E0004217F /* bigbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bigbackground.png; path = Resources/RDVasset/bigbackground.png; sourceTree = "<group>"; };
+		A5C072441723E15E0004217F /* earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = earth.png; path = Resources/RDVasset/earth.png; sourceTree = "<group>"; };
+		A5C072451723E15E0004217F /* iss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iss.png; path = Resources/RDVasset/iss.png; sourceTree = "<group>"; };
+		A5C072461723E15E0004217F /* satellite1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = satellite1.png; path = Resources/RDVasset/satellite1.png; sourceTree = "<group>"; };
 		B6907C3C1722DE3D0070EA28 /* earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth.png; sourceTree = "<group>"; };
 		B6907C3E1722F23E0070EA28 /* CCPanZoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPanZoomController.h; sourceTree = "<group>"; };
 		B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPanZoomController.m; sourceTree = "<group>"; };
@@ -634,6 +644,11 @@
 		A5C0701D1722D0810004217F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A5C072421723E15E0004217F /* background.png */,
+				A5C072431723E15E0004217F /* bigbackground.png */,
+				A5C072441723E15E0004217F /* earth.png */,
+				A5C072451723E15E0004217F /* iss.png */,
+				A5C072461723E15E0004217F /* satellite1.png */,
 				A5C0701E1722D0810004217F /* Default.png */,
 				A5C070201722D0810004217F /* Default-Landscape~ipad.png */,
 				A5C070221722D0810004217F /* fps_images.png */,
@@ -1227,6 +1242,11 @@
 				A5C072371722D0850004217F /* blocks.png in Resources */,
 				B6907C3D1722DE3D0070EA28 /* earth.png in Resources */,
 				B6907C421722F4260070EA28 /* Default-568h@2x.png in Resources */,
+				A5C072471723E15E0004217F /* background.png in Resources */,
+				A5C072481723E15E0004217F /* bigbackground.png in Resources */,
+				A5C072491723E15E0004217F /* earth.png in Resources */,
+				A5C0724A1723E15E0004217F /* iss.png in Resources */,
+				A5C0724B1723E15E0004217F /* satellite1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

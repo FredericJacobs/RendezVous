@@ -15,10 +15,7 @@
 #pragma mark - PhysicsSprite
 @implementation PhysicsSprite
 
--(void) setPhysicsBody:(b2Body *)body
-{
-	body_ = body;
-}
+
 
 // this method will only get called if the sprite is batched.
 // return YES if the physics values (angles, position ) changed
@@ -26,6 +23,14 @@
 -(BOOL) dirty
 {
 	return YES;
+}
+
+-(void) setPhysicsBody:(b2Body*)body {
+  body_=body;
+}
+
+-(b2Body*) getPhysicsBody{
+  return body_;
 }
 
 // returns the transform matrix according the Chipmunk Body values

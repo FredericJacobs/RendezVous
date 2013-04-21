@@ -12,6 +12,13 @@
 @interface PhysicsSprite : CCSprite
 {
 	b2Body *body_;	// strong ref
+
 }
+@property (nonatomic) float oldvel;
+@property (nonatomic) float velchange;
+@property (nonatomic) float oldDis;
+
 -(void) setPhysicsBody:(b2Body*)body;
+-(b2Body*) getPhysicsBody;
+
 @end
