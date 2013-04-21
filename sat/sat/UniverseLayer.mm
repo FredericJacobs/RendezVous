@@ -27,8 +27,7 @@ enum {
 
 @implementation UniverseLayer
 
-+(CCScene *) scene
-{
++(CCScene *) scene {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
 	
@@ -50,8 +49,7 @@ enum {
 	return scene;
 }
 
--(id) init
-{
+-(id) init {
 	if( (self=[super init])) {
 		
 		// enable events
@@ -140,12 +138,14 @@ enum {
 	planetCoords.y= pY/PTM_RATIO;
 	
 	bodyDef.position=planetCoords;
+
 	b2Body *thePlanet = world->CreateBody(&bodyDef);
+  thePlanet->CreateFixture(&fixtureDef);
+
 	PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:planetImage];
 
 	sprite.position=ccp(pX/PTM_RATIO,pY/PTM_RATIO);
 	[sprite setPhysicsBody:thePlanet];
-	thePlanet->CreateFixture(&fixtureDef);
 	[_planets addObject:sprite];
   [self addChild:sprite];
 	
@@ -155,7 +155,7 @@ enum {
 
 
 
--(void) addNewSpriteAtPosition:(CGPoint)p imageNamed:(NSString*)bodyImage {
+-(void) addNewSatAtPosition:(CGPoint)p imageNamed:(NSString*)bodyImage {
     CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
   
     PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:bodyImage];
@@ -163,7 +163,7 @@ enum {
     sprite.velchange=0;
     sprite.oldDis=0;
     sprite.position = ccp( p.x, p.y);
-    
+    CGSize s = [[CCDirector sharedDirector] winSize];
     // Define the dynamic body.
     //Set up a 1m squared box in the physics world
     b2BodyDef bodyDef;
@@ -173,12 +173,12 @@ enum {
     
     // Define another box shape for our dynamic body.
     b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox(.5f, .5f);//These are mid points for our 1m box
+    dynamicBox.SetAsBox(.3f, .3f);//These are mid points for our 1m box
     
     // Define the dynamic body fixture.
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &dynamicBox;
-    fixtureDef.density = 1.0f;
+    fixtureDef.density = 10.0f;
     fixtureDef.friction = 0.3f;
     body->CreateFixture(&fixtureDef);
     
@@ -188,7 +188,7 @@ enum {
 
     // actually apply a force!
     b2Vec2 force = b2Vec2(25,52);
-    CGSize s = [[CCDirector sharedDirector] winSize];
+ 
     b2Vec2 center = b2Vec2(s.height,s.width);
 
     body->ApplyForce(force, center);
@@ -223,7 +223,6 @@ enum {
       planetDistance-=planetPosition;
       float finalDistance = planetDistance.Length();
       // Checks if the debris should be affected by planet gravity (in this case, the debris must be within a radius of three times the planet radius) TODO: we probably always want it to be affected in our sim
-      if (finalDistance<=planetRadius*10) {
         // Inverts planet distance, so that the force will move the debris in the direction of the planet origin
         planetDistance.x=-planetDistance.x;
         planetDistance.y=-planetDistance.y;
@@ -232,20 +231,25 @@ enum {
         planetDistance*=(1/vecSum)*planetRadius/finalDistance;
         // This is the final formula to make the gravity weaker as we move far from the planet TODO: do we want this?
         [sat getPhysicsBody]->ApplyForce(planetDistance, [sat getPhysicsBody]->GetWorldCenter());
+        
+        CGRect projectileRect = [sat boundingBox];
+        CGRect targetRects = [planet boundingBox];
+        if (CGRectIntersectsRect(projectileRect, targetRects)) {
+          NSLog(@"ha ha Collision detected");
+        }
       }
     }
-  }
+  
 }
 
-- (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+- (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	if ([touches count] == 1) {
 		UITouch *touch = [touches anyObject];
 		self.tapPoint = [touch locationInView:[[CCDirector sharedDirector]view]];
 	}
 }
 
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	if ([touches count] == 1) {
 		UITouch *touch = [touches anyObject];
 		
@@ -259,14 +263,13 @@ enum {
 				
 				location = [[CCDirector sharedDirector] convertToUI:location];
 
-				[self addNewSpriteAtPosition: location imageNamed:@"iss.png"];
+				[self addNewSatAtPosition:location imageNamed:@"iss.png"];
 			}
 		}
 	//}
 }
 
--(void) dealloc
-{
+-(void) dealloc {
 	delete world;
 	world = NULL;
 	
