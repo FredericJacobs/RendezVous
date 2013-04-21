@@ -282,7 +282,7 @@ enum {
 	for (PhysicsSprite *sat in sats) {
 		CCParticleSun *explosion = [CCParticleSun node];
 		//self.emitter.position = ccp( size.width /2 , size.height/2 );
-		explosion.position = sat.position;
+		explosion.position = ccp([sat getPhysicsBody]->GetPosition().x*PTM_RATIO,[sat getPhysicsBody]->GetPosition().y*PTM_RATIO);
 		explosion.duration = 1;
 		explosion.gravity=CGPointZero;
 		
@@ -331,8 +331,7 @@ enum {
 		if (launchButton.hidden) {
 			[self userSwipedWithVector:b2Vec2(self.tapPoint.x-location.x, self.tapPoint.y-location.y)];
 		}
-		
-
+  
 	}
 	
 }
