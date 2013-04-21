@@ -1,6 +1,8 @@
 Rendez-Vous	
 ===========
 
+![GameIcon](http://f.cl.ly/items/2s292h030h2k1p313v0z/IMG_1598.PNG)
+
 Rendez-Vous is an iPhone games that tries to show the importance of the several launching parameters of satellites. By playing the game, the user gets familiar with initial speeds and directions to place satellites into orbit.
 
 # Challenge
@@ -9,7 +11,11 @@ This application was developed for the International Space Apps challenge from s
 
 # Gameplay
 
+![Game](http://f.cl.ly/items/0N2h1j3F131Y1U1Q2H0M/breezi_placeit-1.png)
+
 The gameplay is meant to be very straight forward. At the bottom of the screen there is a big red button to launch a rocket. A rocket takes off and then the user needs to find a good orbital altitude to launch the satellite. Once the rocket gets at the desired altitude, the user swipes the screen with a certain direction and intensity (length of the swipe).
+
+![Game2](http://f.cl.ly/items/0i1k3X023K0u191K3W0r/IMG_1597.PNG)
 
 If the intensity, direction and altitude match a possible orbit. Then the user has succeeded.
 
