@@ -195,7 +195,8 @@ enum {
     fixtureDef.density = 10.0f;
     fixtureDef.friction = 0.3f;
     body->CreateFixture(&fixtureDef);
-    
+    body->SetFixedRotation(true);
+  
     
     [sprite setPhysicsBody:body];
     body->SetUserData(sprite);
@@ -221,10 +222,12 @@ enum {
 	
 	int32 velocityIterations = 10;
 	int32 positionIterations = 10;
-  
-  
+
   world->Step(1/30.0, velocityIterations , positionIterations);
+
+
   world->ClearForces();
+  NSMutableSet *collidedSatellites = [[NSMutableSet alloc] init];
   for (PhysicsSprite *sat in _satellites){
     b2Vec2 debrisPosition=[sat getPhysicsBody]->GetWorldCenter();
     for(PhysicsSprite *planet  in _planets){
@@ -250,10 +253,11 @@ enum {
         CGRect projectileRect = [sat boundingBox];
         CGRect targetRects = [planet boundingBox];
         if (CGRectIntersectsRect(projectileRect, targetRects)) {
-          NSLog(@"ha ha Collision detected");
+          [collidedSatellites addObject:sat];
         }
       }
     }
+  
   
 }
 
