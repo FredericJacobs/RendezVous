@@ -27,6 +27,7 @@
 	CCSprite *earth;
 	CCPanZoomController *_controller;
 	GLESDebugDraw *m_debugDraw;		// strong ref
+	UIButton *launchButton;
 }
 
 @property (nonatomic,strong) NSMutableArray *planets;

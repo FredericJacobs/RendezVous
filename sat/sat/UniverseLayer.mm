@@ -49,6 +49,8 @@ enum {
 	return scene;
 }
 
+#pragma mark Initialization methods (Cocos 2D controller, graphics and physics)
+
 -(id) init {
 	if( (self=[super init])) {
 		
@@ -71,6 +73,15 @@ enum {
 		_controller.zoomOnDoubleTap = FALSE;
         [_controller enableWithTouchPriority:0 swallowsTouches:NO];
 		
+		//Setting up the button that will be used to launch the rocket.
+		
+		launchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+		float sizeOfButton = 80;
+		launchButton.frame = CGRectMake([[UIScreen mainScreen]bounds].size.height - sizeOfButton, [UIScreen mainScreen].bounds.size.width - sizeOfButton, sizeOfButton, sizeOfButton);
+		UIImage *launchButtonImage = [UIImage imageNamed:@"LaunchButton.png"];
+		[launchButton setBackgroundImage:launchButtonImage forState:UIControlStateNormal];
+		[launchButton addTarget:self action:@selector(launchButtonWasTapped) forControlEvents:UIControlEventTouchUpInside];
+		[[[CCDirector sharedDirector]view]addSubview:launchButton];
 	}
 	return self;
 }
@@ -93,18 +104,19 @@ enum {
 	
 	world->SetContinuousPhysics(true);
 	
-	m_debugDraw = new GLESDebugDraw( PTM_RATIO );
-	world->SetDebugDraw(m_debugDraw);
+	//m_debugDraw = new GLESDebugDraw( PTM_RATIO );
+	//world->SetDebugDraw(m_debugDraw);
 	
-	uint32 flags = 0;
-	flags += b2Draw::e_shapeBit;
-	m_debugDraw->SetFlags(flags);
+	//uint32 flags = 0;
+	//flags += b2Draw::e_shapeBit;
+	//m_debugDraw->SetFlags(flags);
 	
 	_satellites = [[NSMutableArray alloc] init];
-  _planets = [[NSMutableArray alloc] init];
+	_planets = [[NSMutableArray alloc] init];
 	
 	[self addPlanet:s.width/2 yCoord:s.height/2  radius:s.width/10 imageNamed:@"earth.png"];
 }
+
 
 -(void) draw {
 	//
@@ -122,6 +134,8 @@ enum {
 	
 	kmGLPopMatrix();
 }
+#pragma mark Planet and Rocket operations
+
 
 -(void)addPlanet:(float)pX yCoord:(float)pY radius:(float)r imageNamed:(NSString*)planetImage{
 	b2FixtureDef fixtureDef;
@@ -154,8 +168,8 @@ enum {
 
 
 
-
 -(void) addNewSatAtPosition:(CGPoint)p imageNamed:(NSString*)bodyImage {
+
     CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
   
     PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:bodyImage];
@@ -197,6 +211,7 @@ enum {
   }
 
 
+#pragma mark Time related operations
 
 -(void) update: (ccTime) dt {
 	//It is recommended that a fixed time step is used with Box2D for stability
@@ -242,7 +257,10 @@ enum {
   
 }
 
-- (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+
+#pragma mark Touch interactions
+
+- (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
 	if ([touches count] == 1) {
 		UITouch *touch = [touches anyObject];
 		self.tapPoint = [touch locationInView:[[CCDirector sharedDirector]view]];
@@ -268,6 +286,12 @@ enum {
 		}
 	//}
 }
+
+- (void)launchButtonWasTapped{
+#warning method not implemented
+}
+
+#pragma mark Memory management
 
 -(void) dealloc {
 	delete world;

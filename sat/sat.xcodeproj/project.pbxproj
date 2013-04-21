@@ -189,6 +189,7 @@
 		A5C0724D1723E5B20004217F /* earth-small.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C0724C1723E5B20004217F /* earth-small.png */; };
 		B6907C401722F23E0070EA28 /* CCPanZoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */; };
 		B6907C421722F4260070EA28 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B6907C411722F4260070EA28 /* Default-568h@2x.png */; };
+		B6C961C21723FB180011AF8A /* LaunchButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B6C961C11723FB180011AF8A /* LaunchButton.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -562,6 +563,7 @@
 		B6907C3E1722F23E0070EA28 /* CCPanZoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPanZoomController.h; sourceTree = "<group>"; };
 		B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPanZoomController.m; sourceTree = "<group>"; };
 		B6907C411722F4260070EA28 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		B6C961C11723FB180011AF8A /* LaunchButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchButton.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -643,6 +645,7 @@
 		A5C0701D1722D0810004217F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B6C961C11723FB180011AF8A /* LaunchButton.png */,
 				A5C0724C1723E5B20004217F /* earth-small.png */,
 				A5C072421723E15E0004217F /* background.png */,
 				A5C072431723E15E0004217F /* bigbackground.png */,
@@ -1239,6 +1242,7 @@
 				A5C0724A1723E15E0004217F /* iss.png in Resources */,
 				A5C0724B1723E15E0004217F /* satellite1.png in Resources */,
 				A5C0724D1723E5B20004217F /* earth-small.png in Resources */,
+				B6C961C21723FB180011AF8A /* LaunchButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1414,10 +1418,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					DEBUG,
-					"COCOS2D_DEBUG=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
