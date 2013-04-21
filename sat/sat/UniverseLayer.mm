@@ -337,9 +337,21 @@ enum {
 	//}
 }
 
+<<<<<<< HEAD
 - (void)launchButtonWasTapped{
   CGSize s = [[CCDirector sharedDirector] winSize];
   [self addRocketAtPosition:ccp(s.width/2,s.height/2) inDirection:b2Vec2(25,0) imageNamed:@"satellite1.png"];
+=======
+-(void)launchButtonWasTapped{
+#warning method not implemented
+	
+	[launchButton removeFromSuperview];
+}
+
+-(void)userSwipedWithVector:(b2Vec2)vector{
+	
+	[[[CCDirector sharedDirector] view]addSubview:launchButton];
+>>>>>>> Launchbutton
 }
 
 #pragma mark Memory management
