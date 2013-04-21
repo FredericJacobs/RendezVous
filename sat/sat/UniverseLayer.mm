@@ -50,6 +50,8 @@ enum {
 	return scene;
 }
 
+#pragma mark Initialization methods (Cocos 2D controller, graphics and physics)
+
 -(id) init
 {
 	if( (self=[super init])) {
@@ -73,6 +75,15 @@ enum {
 		_controller.zoomOnDoubleTap = FALSE;
         [_controller enableWithTouchPriority:0 swallowsTouches:NO];
 		
+		//Setting up the button that will be used to launch the rocket.
+		
+		launchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+		float sizeOfButton = 80;
+		launchButton.frame = CGRectMake([[UIScreen mainScreen]bounds].size.height - sizeOfButton, [UIScreen mainScreen].bounds.size.width - sizeOfButton, sizeOfButton, sizeOfButton);
+		UIImage *launchButtonImage = [UIImage imageNamed:@"LaunchButton.png"];
+		[launchButton setBackgroundImage:launchButtonImage forState:UIControlStateNormal];
+		[launchButton addTarget:self action:@selector(launchButtonWasTapped) forControlEvents:UIControlEventTouchUpInside];
+		[[[CCDirector sharedDirector]view]addSubview:launchButton];
 	}
 	return self;
 }
@@ -95,36 +106,20 @@ enum {
 	
 	world->SetContinuousPhysics(true);
 	
-	m_debugDraw = new GLESDebugDraw( PTM_RATIO );
-	world->SetDebugDraw(m_debugDraw);
+	//m_debugDraw = new GLESDebugDraw( PTM_RATIO );
+	//world->SetDebugDraw(m_debugDraw);
 	
-	uint32 flags = 0;
-	flags += b2Draw::e_shapeBit;
-	m_debugDraw->SetFlags(flags);
+	//uint32 flags = 0;
+	//flags += b2Draw::e_shapeBit;
+	//m_debugDraw->SetFlags(flags);
 	
 	_satellites = [[NSMutableArray alloc] init];
-  _planets = [[NSMutableArray alloc] init];
+	_planets = [[NSMutableArray alloc] init];
 	
 	[self addPlanet:s.width/2 yCoord:s.height/2  radius:s.width/10 imageNamed:@"earth-small.png"];
 }
 
--(void) draw
-{
-	//
-	// IMPORTANT:
-	// This is only for debug purposes
-	// It is recommend to disable it
-	//
-	[super draw];
-	
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-	
-	kmGLPushMatrix();
-	
-	world->DrawDebugData();
-	
-	kmGLPopMatrix();
-}
+#pragma mark Planet and Rocket operations
 
 -(void)addPlanet:(float)pX yCoord:(float)pY radius:(float)r imageNamed:(NSString*)planetImage{
 	b2FixtureDef fixtureDef;
@@ -151,10 +146,6 @@ enum {
   [self addChild:sprite];
 	
 }
-
-
-
-
 
 -(void) addNewSpriteAtPosition:(CGPoint)p imageNamed:(NSString*)bodyImage{
     CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
@@ -198,6 +189,7 @@ enum {
   }
 
 
+#pragma mark Time related operations
 
 -(void) update: (ccTime) dt
 {
@@ -239,6 +231,8 @@ enum {
   }
 }
 
+#pragma mark Touch interactions
+
 - (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
 	if ([touches count] == 1) {
 		UITouch *touch = [touches anyObject];
@@ -266,6 +260,13 @@ enum {
 		}
 	//}
 }
+
+
+- (void)launchButtonWasTapped{
+#warning method not implemented
+}
+
+#pragma mark Memory management
 
 -(void) dealloc
 {
