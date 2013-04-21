@@ -167,6 +167,20 @@ enum {
 
 
 
+-(void) addRocketAtPosition:(CGPoint)p  inDirection:(b2Vec2)direction imageNamed:(NSString*)bodyImage {
+  CGSize s = [[CCDirector sharedDirector] winSize];
+  PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:bodyImage];
+  sprite.position = ccp( p.x, p.y);
+  b2BodyDef bodyDef;
+  bodyDef.type = b2_dynamicBody;
+  bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+  b2Body *body = world->CreateBody(&bodyDef);
+  b2Vec2 center = b2Vec2(s.height,s.width);
+  body->ApplyForce(direction, center);
+  [sprite setPhysicsBody:body];
+  [self addChild:sprite];
+}
+
 
 -(void) addNewSatAtPosition:(CGPoint)p imageNamed:(NSString*)bodyImage {
 
@@ -292,7 +306,8 @@ enum {
 }
 
 - (void)launchButtonWasTapped{
-#warning method not implemented
+  CGSize s = [[CCDirector sharedDirector] winSize];
+  [self addRocketAtPosition:ccp(s.width/2,s.height/2) inDirection:b2Vec2(25,0) imageNamed:@"satellite1.png"];
 }
 
 #pragma mark Memory management
