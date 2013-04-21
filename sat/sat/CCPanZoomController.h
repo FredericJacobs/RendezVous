@@ -17,9 +17,6 @@ typedef struct {
 
 @interface CCPanZoomController : NSObject<CCTargetedTouchDelegate>
 {	
-    //properties
-    CCNode  *_node;
-
     //bounding rect
     CGPoint _tr;
     CGPoint _bl;
@@ -72,7 +69,7 @@ typedef struct {
 @property (readwrite, assign) float     pinchDistanceThreshold; /*!< The distance moved before a pinch is recognized */
 @property (readonly) float              optimalZoomOutLimit; /*!< Get the optimal zoomOutLimit for the current state */
 @property (readwrite, assign) float     doubleTapZoomDuration;  /*!< Duration of zoom after double-tap */
-
+@property (readwrite, assign) CCNode *node;
 /*! Create a new control with the node you want to scroll/zoom */
 + (id) controllerWithNode:(CCNode*)node;
 

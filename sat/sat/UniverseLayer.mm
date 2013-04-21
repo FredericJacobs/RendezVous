@@ -62,6 +62,7 @@ enum {
         _controller.boundingRect = boundingRect;
         _controller.zoomOutLimit = 1;
         _controller.zoomInLimit = 3;
+		_controller.zoomOnDoubleTap = FALSE;
         [_controller enableWithTouchPriority:0 swallowsTouches:NO];
 		
 	}
@@ -147,7 +148,7 @@ enum {
 //-(void) addNewSpriteAtPosition:(CGPoint)p {
 //  [self addBox:p.x yCoord:p.y wVal:20 hVal:20];
 //}
-  -(void) addNewSpriteAtPosition:(CGPoint)p{
+-(void) addNewSpriteAtPosition:(CGPoint)p{
     CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
     CCNode *parent = [self getChildByTag:kTagParentNode];
     
@@ -231,16 +232,30 @@ enum {
   }
 }
 
+- (void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+	if ([touches count] == 1) {
+		UITouch *touch = [touches anyObject];
+		self.tapPoint = [touch locationInView:[[CCDirector sharedDirector]view]];
+	}
+}
+
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if ([touches count] == 1) {
-		//Add a new body/atlas sprite at the touched location
-		for( UITouch *touch in touches ) {
-			CGPoint location = [touch locationInView: [touch view]];
+		UITouch *touch = [touches anyObject];
 		
-			location = [[CCDirector sharedDirector] convertToGL: location];
-		
-			[self addNewSpriteAtPosition: location];
+		if (CGPointEqualToPoint([touch locationInView:[[CCDirector sharedDirector]view]], self.tapPoint)){
+			for( UITouch *touch in touches ) {
+				CGPoint location = [touch locationInView: [touch view]];
+				
+				NSLog(@"UIView Location: height :%f width: %f", location.x, location.y);
+				
+				// This fixes the OpenGL vs UIKit coordinates but some bug persists for the x axis (width of the device)
+				
+				location = [[CCDirector sharedDirector] convertToUI:location];
+
+				[self addNewSpriteAtPosition: location];
+			}
 		}
 	}
 }
