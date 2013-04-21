@@ -321,32 +321,31 @@ enum {
 	if ([touches count] == 1) {
 		UITouch *touch = [touches anyObject];
 		
-
-			for( UITouch *touch in touches ) {
-				CGPoint location = [touch locationInView: [touch view]];
-				
-				NSLog(@"UIView Location: height :%f width: %f", location.x, location.y);
-				
-				// This fixes the OpenGL vs UIKit coordinates but some bug persists for the x axis (width of the device)
-				
-				location = [[CCDirector sharedDirector] convertToUI:location];
-
-				[self addNewSatAtPosition:location imageNamed:@"iss.png"];
-			}
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		// This fixes the OpenGL vs UIKit coordinates but some bug persists for the x axis (width of the device)
+		
+		location = [[CCDirector sharedDirector] convertToUI:location];
+		
+		if (launchButton.hidden) {
+			[self userSwipedWithVector:b2Vec2(self.tapPoint.x-location.x, self.tapPoint.y-location.y)];
 		}
-	/
+		
+		//[self addNewSatAtPosition:location imageNamed:@"iss.png"];
+	}
+	
 }
 
 - (void)launchButtonWasTapped{
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	[self addRocketAtPosition:ccp(s.width/2,s.height/2) inDirection:b2Vec2(25,0) imageNamed:@"satellite1.png"];
-	[launchButton removeFromSuperview];
+	if (!launchButton.hidden) {
+		launchButton.hidden = YES;
+		[self addRocketAtPosition:ccp(s.width/2,s.height/2) inDirection:b2Vec2(25,0) imageNamed:@"satellite1.png"];
+	}
 }
 
 -(void)userSwipedWithVector:(b2Vec2)vector{
-
-	[[[CCDirector sharedDirector] view]addSubview:launchButton];
-
+	launchButton.hidden = FALSE;
 }
 
 #pragma mark Memory management
