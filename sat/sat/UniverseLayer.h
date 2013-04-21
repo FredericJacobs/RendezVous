@@ -33,7 +33,7 @@
 @property (nonatomic,strong) NSMutableArray *planets;
 @property (nonatomic,strong) NSMutableArray *satellites;
 @property (nonatomic) float oldDistance;
-@property (nonatomic,strong) PhysicsSprite *orbitCanvas;
+@property (nonatomic,strong) PhysicsSprite *rocket;
 @property (nonatomic) BOOL doMoveLeft;
 @property CGPoint tapPoint;
 // returns a CCScene that contains the HelloWorldLayer as the only child

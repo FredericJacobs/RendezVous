@@ -179,10 +179,11 @@ enum {
   body->ApplyForce(direction, center);
   [sprite setPhysicsBody:body];
   [self addChild:sprite];
+  self.rocket=sprite;
 }
 
 
--(void) addNewSatAtPosition:(CGPoint)p imageNamed:(NSString*)bodyImage {
+-(void) addNewSatAtPosition:(CGPoint)p inDirection:(b2Vec2)direction imageNamed:(NSString*)bodyImage {
 
     CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
   
@@ -216,11 +217,11 @@ enum {
     body->SetUserData(sprite);
 
     // actually apply a force!
-    b2Vec2 force = b2Vec2(25,52);
+    
  
     b2Vec2 center = b2Vec2(s.height,s.width);
 
-    body->ApplyForce(force, center);
+    body->ApplyForce(direction, center);
     [_satellites addObject:sprite];
     [self addChild:sprite];
   }
@@ -331,7 +332,7 @@ enum {
 			[self userSwipedWithVector:b2Vec2(self.tapPoint.x-location.x, self.tapPoint.y-location.y)];
 		}
 		
-		//[self addNewSatAtPosition:location imageNamed:@"iss.png"];
+
 	}
 	
 }
@@ -340,13 +341,19 @@ enum {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	if (!launchButton.hidden) {
 		launchButton.hidden = YES;
-		[self addRocketAtPosition:ccp(s.width/2,s.height/2) inDirection:b2Vec2(25,0) imageNamed:@"satellite1.png"];
+		[self addRocketAtPosition:ccp(s.width/2,s.height/2) inDirection:b2Vec2(25,0) imageNamed:@"rocket.png"];
 	}
 }
 
 -(void)userSwipedWithVector:(b2Vec2)vector{
 	launchButton.hidden = FALSE;
   // TODO: add launch satellite here!
+  CGPoint launchSatFrom = self.rocket.position;
+  // delete the rocket
+  [self.rocket removeFromParentAndCleanup:YES];
+  [self addNewSatAtPosition:launchSatFrom inDirection:vector imageNamed:@"iss.png"];
+  // launch the satellite
+  
 }
 
 #pragma mark Memory management
