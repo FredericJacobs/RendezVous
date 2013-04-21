@@ -96,7 +96,7 @@ enum {
 	_satellites = [[NSMutableArray alloc] init];
   _planets = [[NSMutableArray alloc] init];
 	
-	[self addPlanet:s.width/2 yCoord:s.height/2  radius:s.width/10];
+	[self addPlanet:s.width/2 yCoord:s.height/2  radius:s.width/10 imageNamed:@"earth-small.png"];
 }
 
 -(void) draw
@@ -117,7 +117,7 @@ enum {
 	kmGLPopMatrix();
 }
 
--(void)addPlanet:(float)pX yCoord:(float)pY radius:(float)r {
+-(void)addPlanet:(float)pX yCoord:(float)pY radius:(float)r imageNamed:(NSString*)planetImage{
 	b2FixtureDef fixtureDef;
 	fixtureDef.restitution=0;
 	fixtureDef.density = 1;
@@ -133,27 +133,24 @@ enum {
 	
 	bodyDef.position=planetCoords;
 	b2Body *thePlanet = world->CreateBody(&bodyDef);
-	PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:@"Earth.png"];
+	PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:planetImage];
 
 	sprite.position=ccp(pX/PTM_RATIO,pY/PTM_RATIO);
 	[sprite setPhysicsBody:thePlanet];
-	[_planets addObject:sprite];
 	thePlanet->CreateFixture(&fixtureDef);
+	[_planets addObject:sprite];
+  [self addChild:sprite];
 	
 }
 
 
 
 
-//-(void) addNewSpriteAtPosition:(CGPoint)p {
-//  [self addBox:p.x yCoord:p.y wVal:20 hVal:20];
-//}
--(void) addNewSpriteAtPosition:(CGPoint)p{
+
+-(void) addNewSpriteAtPosition:(CGPoint)p imageNamed:(NSString*)bodyImage{
     CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-    CCNode *parent = [self getChildByTag:kTagParentNode];
-    
-    PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:@"Earth.png"];
-    [parent addChild:sprite];
+  
+    PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:bodyImage];
     sprite.oldvel=0;
     sprite.velchange=0;
     sprite.oldDis=0;
@@ -188,6 +185,7 @@ enum {
 
     body->ApplyForce(force, center);
     [_satellites addObject:sprite];
+    [self addChild:sprite];
   }
 
 
@@ -244,7 +242,7 @@ enum {
 	if ([touches count] == 1) {
 		UITouch *touch = [touches anyObject];
 		
-		if (CGPointEqualToPoint([touch locationInView:[[CCDirector sharedDirector]view]], self.tapPoint)){
+		//if (CGPointEqualToPoint([touch locationInView:[[CCDirector sharedDirector]view]], self.tapPoint)){
 			for( UITouch *touch in touches ) {
 				CGPoint location = [touch locationInView: [touch view]];
 				
@@ -254,10 +252,10 @@ enum {
 				
 				location = [[CCDirector sharedDirector] convertToUI:location];
 
-				[self addNewSpriteAtPosition: location];
+				[self addNewSpriteAtPosition: location imageNamed:@"iss.png"];
 			}
 		}
-	}
+	//}
 }
 
 -(void) dealloc
