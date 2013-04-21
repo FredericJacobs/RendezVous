@@ -58,14 +58,17 @@ enum {
 		
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
-
+		
 		// init physics
 		[self initPhysics];
-
+		
 		[self scheduleUpdate];
 		
         CGRect boundingRect = CGRectMake(0, 0,[UIScreen mainScreen].bounds.size.height, [UIScreen mainScreen].bounds.size.width);
-	
+		
+		
+		// Allows Zooming in and out + Panning
+		
 		_controller = [[CCPanZoomController controllerWithNode:self] retain];
         _controller.boundingRect = boundingRect;
         _controller.zoomOutLimit = 1;
@@ -104,36 +107,12 @@ enum {
 	
 	world->SetContinuousPhysics(true);
 	
-	//m_debugDraw = new GLESDebugDraw( PTM_RATIO );
-	//world->SetDebugDraw(m_debugDraw);
-	
-	//uint32 flags = 0;
-	//flags += b2Draw::e_shapeBit;
-	//m_debugDraw->SetFlags(flags);
-	
 	_satellites = [[NSMutableArray alloc] init];
 	_planets = [[NSMutableArray alloc] init];
 	
 	[self addPlanet:s.width/2 yCoord:s.height/2  radius:s.width/10 imageNamed:@"earth.png"];
 }
 
-
--(void) draw {
-	//
-	// IMPORTANT:
-	// This is only for debug purposes
-	// It is recommend to disable it
-	//
-	[super draw];
-	
-	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
-	
-	kmGLPushMatrix();
-	
-	world->DrawDebugData();
-	
-	kmGLPopMatrix();
-}
 #pragma mark Planet and Rocket operations
 
 
@@ -152,41 +131,40 @@ enum {
 	planetCoords.y= pY/PTM_RATIO;
 	
 	bodyDef.position=planetCoords;
-
+	
 	b2Body *thePlanet = world->CreateBody(&bodyDef);
-  thePlanet->CreateFixture(&fixtureDef);
-
+	thePlanet->CreateFixture(&fixtureDef);
+	
 	PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:planetImage];
-
+	
 	sprite.position=ccp(pX/PTM_RATIO,pY/PTM_RATIO);
 	[sprite setPhysicsBody:thePlanet];
 	[_planets addObject:sprite];
-  [self addChild:sprite];
+	[self addChild:sprite];
 	
 }
 
 
-
 -(void) addRocketAtPosition:(CGPoint)p  inDirection:(b2Vec2)direction imageNamed:(NSString*)bodyImage {
-  CGSize s = [[CCDirector sharedDirector] winSize];
-  PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:bodyImage];
-  sprite.position = ccp( p.x, p.y);
-  b2BodyDef bodyDef;
-  bodyDef.type = b2_dynamicBody;
-  bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
-  b2Body *body = world->CreateBody(&bodyDef);
-  b2Vec2 center = b2Vec2(s.height,s.width);
-  body->ApplyForce(direction, center);
-  [sprite setPhysicsBody:body];
-  [self addChild:sprite];
-  self.rocket=sprite;
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:bodyImage];
+	sprite.position = ccp( p.x, p.y);
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position.Set(p.x/PTM_RATIO, p.y/PTM_RATIO);
+	b2Body *body = world->CreateBody(&bodyDef);
+	b2Vec2 center = b2Vec2(s.height,s.width);
+	body->ApplyForce(direction, center);
+	[sprite setPhysicsBody:body];
+	[self addChild:sprite];
+	self.rocket=sprite;
 }
 
 
 -(void) addNewSatAtPosition:(CGPoint)p inDirection:(b2Vec2)direction imageNamed:(NSString*)bodyImage {
-
+	
     CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-  
+	
     PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:bodyImage];
     sprite.oldvel=0;
     sprite.velchange=0;
@@ -211,20 +189,18 @@ enum {
     fixtureDef.friction = 0.3f;
     body->CreateFixture(&fixtureDef);
     body->SetFixedRotation(true);
-  
+	
     
     [sprite setPhysicsBody:body];
     body->SetUserData(sprite);
-
+	
     // actually apply a force!
-    
- 
     b2Vec2 center = b2Vec2(s.height,s.width);
-
+	
     body->ApplyForce(direction, center);
     [_satellites addObject:sprite];
     [self addChild:sprite];
-  }
+}
 
 
 #pragma mark Time related operations
@@ -237,72 +213,59 @@ enum {
 	
 	int32 velocityIterations = 10;
 	int32 positionIterations = 10;
-
-  world->Step(1/30.0, velocityIterations , positionIterations);
-
-
-  world->ClearForces();
-  NSMutableSet *collidedSatellites = [[NSMutableSet alloc] init];
-  for (PhysicsSprite *sat in _satellites){
-    b2Vec2 debrisPosition=[sat getPhysicsBody]->GetWorldCenter();
-    for(PhysicsSprite *planet  in _planets){
-      
-      b2CircleShape *planetShape=(b2CircleShape *)([planet getPhysicsBody]->GetFixtureList()->GetShape());
-      //Unfortunately Box2D static bodies do not have mass, so I need to get the circle shape of the planet. So in this case the bigger the radius, the more intense the gravity attraction. TODO: make this mass physical
-      float planetRadius = planetShape->m_radius;
-      b2Vec2 planetPosition=[planet getPhysicsBody]->GetWorldCenter();
-      b2Vec2 planetDistance = b2Vec2(0,0);
-      planetDistance+=debrisPosition;
-      planetDistance-=planetPosition;
-      float finalDistance = planetDistance.Length();
-      // Checks if the debris should be affected by planet gravity (in this case, the debris must be within a radius of three times the planet radius) TODO: we probably always want it to be affected in our sim
-        // Inverts planet distance, so that the force will move the debris in the direction of the planet origin
-        planetDistance.x=-planetDistance.x;
-        planetDistance.y=-planetDistance.y;
-        // make gravity attraction weaker when the debris is far from the planet, and stronger when the debris is getting close to the planet TODO: make this physical
-        float vecSum=abs(planetDistance.x)+abs(planetDistance.y);
-        planetDistance*=(1/vecSum)*planetRadius/finalDistance;
-        // This is the final formula to make the gravity weaker as we move far from the planet TODO: do we want this?
-        [sat getPhysicsBody]->ApplyForce(planetDistance, [sat getPhysicsBody]->GetWorldCenter());
-        
-        CGRect projectileRect = [sat boundingBox];
-        CGRect targetRects = [planet boundingBox];
-        if (CGRectIntersectsRect(projectileRect, targetRects)) {
-          [collidedSatellites addObject:sat];
-        }
-      }
+	
+	world->Step(1/30.0, velocityIterations , positionIterations);
+	
+	
+	world->ClearForces();
+	NSMutableSet *collidedSatellites = [[NSMutableSet alloc] init];
+	for (PhysicsSprite *sat in _satellites){
+		b2Vec2 debrisPosition=[sat getPhysicsBody]->GetWorldCenter();
+		for(PhysicsSprite *planet  in _planets){
+			
+			b2CircleShape *planetShape=(b2CircleShape *)([planet getPhysicsBody]->GetFixtureList()->GetShape());
+			//Unfortunately Box2D static bodies do not have mass, so I need to get the circle shape of the planet. So in this case the bigger the radius, the more intense the gravity attraction. TODO: make this mass physical
+			float planetRadius = planetShape->m_radius;
+			b2Vec2 planetPosition=[planet getPhysicsBody]->GetWorldCenter();
+			b2Vec2 planetDistance = b2Vec2(0,0);
+			planetDistance+=debrisPosition;
+			planetDistance-=planetPosition;
+			float finalDistance = planetDistance.Length();
+			// Checks if the debris should be affected by planet gravity (in this case, the debris must be within a radius of three times the planet radius) TODO: we probably always want it to be affected in our sim
+			// Inverts planet distance, so that the force will move the debris in the direction of the planet origin
+			planetDistance.x=-planetDistance.x;
+			planetDistance.y=-planetDistance.y;
+			// make gravity attraction weaker when the debris is far from the planet, and stronger when the debris is getting close to the planet TODO: make this physical
+			float vecSum=abs(planetDistance.x)+abs(planetDistance.y);
+			planetDistance*=(1/vecSum)*planetRadius/finalDistance;
+			// This is the final formula to make the gravity weaker as we move far from the planet TODO: do we want this?
+			[sat getPhysicsBody]->ApplyForce(planetDistance, [sat getPhysicsBody]->GetWorldCenter());
+			
+			CGRect projectileRect = [sat boundingBox];
+			CGRect targetRects = [planet boundingBox];
+			if (CGRectIntersectsRect(projectileRect, targetRects)) {
+				[collidedSatellites addObject:sat];
+			}
+		}
     }
-  
+	
 	[self satellitesDidCrash:collidedSatellites];
-  
+	
 }
 
 
 -(void) satellitesDidCrash:(NSSet*)sats{
 	for (PhysicsSprite *sat in sats) {
 		CCParticleSun *explosion = [CCParticleSun node];
-		//self.emitter.position = ccp( size.width /2 , size.height/2 );
-    
 		explosion.position = ccp([sat getPhysicsBody]->GetPosition().x*PTM_RATIO,[sat getPhysicsBody]->GetPosition().y*PTM_RATIO);
 		explosion.duration = 1;
 		explosion.gravity=CGPointZero;
-		
-		//explosion.anchorPoint = ccp(0.5f,0.5f);
 		explosion.autoRemoveOnFinish = YES;
 		explosion.texture = [[CCTextureCache sharedTextureCache ] addImage: @"4638.jpg"];
 		ccColor4F endColor = {1, 1, 1, 0};
-		//emitter.startColor = startColor;
 		explosion.endColor = endColor;
 		[self addChild:explosion z:10];
-		
-		
-		//CCParticleFire *emitter = [[CCParticleFire alloc] init];
-		//emitter.texture = [[CCTextureCache sharedTextureCache] addImage:@”particle.png”];
-		//mitter.position = ccp(340,160);
-		
-		//[self addChild:explosion];
-		//emitter.autoRemoveOnFinish = YES;
-		
+
 		[sat removeFromParentAndCleanup:YES];
 		[_satellites removeObject:sat];
 	}
@@ -332,7 +295,7 @@ enum {
 		if (launchButton.hidden) {
 			[self userSwipedWithVector:b2Vec2(self.tapPoint.x-location.x, self.tapPoint.y-location.y)];
 		}
-  
+		
 	}
 	
 }
@@ -347,15 +310,13 @@ enum {
 
 -(void)userSwipedWithVector:(b2Vec2)vector{
 	launchButton.hidden = FALSE;
-  // TODO: add launch satellite here!
-  CGPoint launchSatFrom = ccp([self.rocket getPhysicsBody]->GetPosition().x*PTM_RATIO,[self.rocket getPhysicsBody]->GetPosition().y*PTM_RATIO);
-  // delete the rocket
-  [self.rocket removeFromParentAndCleanup:YES];
-  vector.y = -vector.y;
-  vector.x = -vector.x;
-  [self addNewSatAtPosition:launchSatFrom inDirection:vector imageNamed:@"iss.png"];
-  // launch the satellite
-  
+	// TODO: add launch satellite here!
+	CGPoint launchSatFrom = ccp([self.rocket getPhysicsBody]->GetPosition().x*PTM_RATIO,[self.rocket getPhysicsBody]->GetPosition().y*PTM_RATIO);
+	// delete the rocket
+	[self.rocket removeFromParentAndCleanup:YES];
+	vector.y = -vector.y;
+	vector.x = -vector.x;
+	[self addNewSatAtPosition:launchSatFrom inDirection:vector imageNamed:@"iss.png"];
 }
 
 #pragma mark Memory management

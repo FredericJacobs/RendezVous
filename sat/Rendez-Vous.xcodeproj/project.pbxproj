@@ -16,8 +16,6 @@
 		A5C070171722D0810004217F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5C070161722D0810004217F /* Foundation.framework */; };
 		A5C070191722D0810004217F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5C070181722D0810004217F /* CoreGraphics.framework */; };
 		A5C0701B1722D0810004217F /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5C0701A1722D0810004217F /* GameKit.framework */; };
-		A5C0701F1722D0810004217F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C0701E1722D0810004217F /* Default.png */; };
-		A5C070211722D0810004217F /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C070201722D0810004217F /* Default-Landscape~ipad.png */; };
 		A5C070231722D0810004217F /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C070221722D0810004217F /* fps_images.png */; };
 		A5C070251722D0810004217F /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C070241722D0810004217F /* fps_images-hd.png */; };
 		A5C070271722D0810004217F /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C070261722D0810004217F /* fps_images-ipadhd.png */; };
@@ -180,7 +178,6 @@
 		A5C0722F1722D0850004217F /* IntroLayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5C0722E1722D0850004217F /* IntroLayer.mm */; };
 		A5C072321722D0850004217F /* GLES-Render.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5C072311722D0850004217F /* GLES-Render.mm */; };
 		A5C072351722D0850004217F /* PhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5C072341722D0850004217F /* PhysicsSprite.mm */; };
-		A5C072371722D0850004217F /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072361722D0850004217F /* blocks.png */; };
 		A5C072471723E15E0004217F /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072421723E15E0004217F /* background.png */; };
 		A5C072481723E15E0004217F /* bigbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072431723E15E0004217F /* bigbackground.png */; };
 		A5C072491723E15E0004217F /* earth.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072441723E15E0004217F /* earth.png */; };
@@ -195,7 +192,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A5C070071722D0810004217F /* sat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5C070071722D0810004217F /* Rendez-Vous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rendez-Vous.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5C0700A1722D0810004217F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A5C0700C1722D0810004217F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A5C0700E1722D0810004217F /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -205,8 +202,6 @@
 		A5C070161722D0810004217F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A5C070181722D0810004217F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A5C0701A1722D0810004217F /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		A5C0701E1722D0810004217F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
-		A5C070201722D0810004217F /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "Resources/Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		A5C070221722D0810004217F /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = Resources/fps_images.png; sourceTree = "<group>"; };
 		A5C070241722D0810004217F /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fps_images-hd.png"; path = "Resources/fps_images-hd.png"; sourceTree = "<group>"; };
 		A5C070261722D0810004217F /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fps_images-ipadhd.png"; path = "Resources/fps_images-ipadhd.png"; sourceTree = "<group>"; };
@@ -555,7 +550,6 @@
 		A5C072311722D0850004217F /* GLES-Render.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "GLES-Render.mm"; sourceTree = "<group>"; };
 		A5C072331722D0850004217F /* PhysicsSprite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhysicsSprite.h; sourceTree = "<group>"; };
 		A5C072341722D0850004217F /* PhysicsSprite.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PhysicsSprite.mm; sourceTree = "<group>"; };
-		A5C072361722D0850004217F /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blocks.png; path = Resources/blocks.png; sourceTree = "<group>"; };
 		A5C072421723E15E0004217F /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = Resources/RDVasset/background.png; sourceTree = "<group>"; };
 		A5C072431723E15E0004217F /* bigbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bigbackground.png; path = Resources/RDVasset/bigbackground.png; sourceTree = "<group>"; };
 		A5C072441723E15E0004217F /* earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = earth.png; path = Resources/RDVasset/earth.png; sourceTree = "<group>"; };
@@ -603,7 +597,7 @@
 		A5C070081722D0810004217F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A5C070071722D0810004217F /* sat.app */,
+				A5C070071722D0810004217F /* Rendez-Vous.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -658,8 +652,6 @@
 				A5C072441723E15E0004217F /* earth.png */,
 				A5C072451723E15E0004217F /* iss.png */,
 				A5C072461723E15E0004217F /* satellite1.png */,
-				A5C0701E1722D0810004217F /* Default.png */,
-				A5C070201722D0810004217F /* Default-Landscape~ipad.png */,
 				A5C070221722D0810004217F /* fps_images.png */,
 				A5C070241722D0810004217F /* fps_images-hd.png */,
 				A5C070261722D0810004217F /* fps_images-ipadhd.png */,
@@ -671,7 +663,6 @@
 				A5C070321722D0820004217F /* Icon@2x.png */,
 				A5C070341722D0820004217F /* Info.plist */,
 				A5C070351722D0820004217F /* iTunesArtwork */,
-				A5C072361722D0850004217F /* blocks.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1180,9 +1171,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A5C070061722D0810004217F /* sat */ = {
+		A5C070061722D0810004217F /* Rendez-Vous */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A5C0723A1722D0850004217F /* Build configuration list for PBXNativeTarget "sat" */;
+			buildConfigurationList = A5C0723A1722D0850004217F /* Build configuration list for PBXNativeTarget "Rendez-Vous" */;
 			buildPhases = (
 				A5C070031722D0810004217F /* Sources */,
 				A5C070041722D0810004217F /* Frameworks */,
@@ -1192,9 +1183,9 @@
 			);
 			dependencies = (
 			);
-			name = sat;
+			name = "Rendez-Vous";
 			productName = sat;
-			productReference = A5C070071722D0810004217F /* sat.app */;
+			productReference = A5C070071722D0810004217F /* Rendez-Vous.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1205,7 +1196,7 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 			};
-			buildConfigurationList = A5C070021722D0810004217F /* Build configuration list for PBXProject "sat" */;
+			buildConfigurationList = A5C070021722D0810004217F /* Build configuration list for PBXProject "Rendez-Vous" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1217,7 +1208,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A5C070061722D0810004217F /* sat */,
+				A5C070061722D0810004217F /* Rendez-Vous */,
 			);
 		};
 /* End PBXProject section */
@@ -1227,8 +1218,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5C0701F1722D0810004217F /* Default.png in Resources */,
-				A5C070211722D0810004217F /* Default-Landscape~ipad.png in Resources */,
 				A5C070231722D0810004217F /* fps_images.png in Resources */,
 				A5C070251722D0810004217F /* fps_images-hd.png in Resources */,
 				A5C070271722D0810004217F /* fps_images-ipadhd.png in Resources */,
@@ -1240,7 +1229,6 @@
 				A5C070331722D0820004217F /* Icon@2x.png in Resources */,
 				A5C070361722D0820004217F /* iTunesArtwork in Resources */,
 				A5C071741722D0840004217F /* ChangeLog in Resources */,
-				A5C072371722D0850004217F /* blocks.png in Resources */,
 				B6907C421722F4260070EA28 /* Default-568h@2x.png in Resources */,
 				A5C072471723E15E0004217F /* background.png in Resources */,
 				A5C072481723E15E0004217F /* bigbackground.png in Resources */,
@@ -1472,7 +1460,7 @@
 					"-lz",
 					"-ObjC",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Rendez-Vous";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				USER_HEADER_SEARCH_PATHS = "\"sat/libs\"";
@@ -1495,7 +1483,7 @@
 					"-lz",
 					"-ObjC",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Rendez-Vous";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				USER_HEADER_SEARCH_PATHS = "\"sat/libs\"";
@@ -1507,7 +1495,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A5C070021722D0810004217F /* Build configuration list for PBXProject "sat" */ = {
+		A5C070021722D0810004217F /* Build configuration list for PBXProject "Rendez-Vous" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5C072381722D0850004217F /* Debug */,
@@ -1516,7 +1504,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A5C0723A1722D0850004217F /* Build configuration list for PBXNativeTarget "sat" */ = {
+		A5C0723A1722D0850004217F /* Build configuration list for PBXNativeTarget "Rendez-Vous" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A5C0723B1722D0850004217F /* Debug */,
