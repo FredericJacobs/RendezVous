@@ -99,8 +99,7 @@ enum {
 	[self addPlanet:s.width/2 yCoord:s.height/2  radius:s.width/10 imageNamed:@"earth.png"];
 }
 
--(void) draw
-{
+-(void) draw {
 	//
 	// IMPORTANT:
 	// This is only for debug purposes
@@ -147,7 +146,7 @@ enum {
 
 
 
--(void) addNewSpriteAtPosition:(CGPoint)p imageNamed:(NSString*)bodyImage{
+-(void) addNewSpriteAtPosition:(CGPoint)p imageNamed:(NSString*)bodyImage {
     CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
   
     PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:bodyImage];
@@ -190,8 +189,7 @@ enum {
 
 
 
--(void) update: (ccTime) dt
-{
+-(void) update: (ccTime) dt {
 	//It is recommended that a fixed time step is used with Box2D for stability
 	//of the simulation, however, we are using a variable time step here.
 	//You need to make an informed choice, the following URL is useful
