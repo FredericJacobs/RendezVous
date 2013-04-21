@@ -282,6 +282,7 @@ enum {
 	for (PhysicsSprite *sat in sats) {
 		CCParticleSun *explosion = [CCParticleSun node];
 		//self.emitter.position = ccp( size.width /2 , size.height/2 );
+    
 		explosion.position = ccp([sat getPhysicsBody]->GetPosition().x*PTM_RATIO,[sat getPhysicsBody]->GetPosition().y*PTM_RATIO);
 		explosion.duration = 1;
 		explosion.gravity=CGPointZero;
@@ -347,9 +348,11 @@ enum {
 -(void)userSwipedWithVector:(b2Vec2)vector{
 	launchButton.hidden = FALSE;
   // TODO: add launch satellite here!
-  CGPoint launchSatFrom = self.rocket.position;
+  CGPoint launchSatFrom = ccp([self.rocket getPhysicsBody]->GetPosition().x*PTM_RATIO,[self.rocket getPhysicsBody]->GetPosition().y*PTM_RATIO);
   // delete the rocket
   [self.rocket removeFromParentAndCleanup:YES];
+  vector.y = -vector.y;
+  vector.x = -vector.x;
   [self addNewSatAtPosition:launchSatFrom inDirection:vector imageNamed:@"iss.png"];
   // launch the satellite
   
