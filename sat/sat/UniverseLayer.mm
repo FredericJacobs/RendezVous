@@ -321,7 +321,7 @@ enum {
 	if ([touches count] == 1) {
 		UITouch *touch = [touches anyObject];
 		
-		//if (CGPointEqualToPoint([touch locationInView:[[CCDirector sharedDirector]view]], self.tapPoint)){
+
 			for( UITouch *touch in touches ) {
 				CGPoint location = [touch locationInView: [touch view]];
 				
@@ -334,24 +334,19 @@ enum {
 				[self addNewSatAtPosition:location imageNamed:@"iss.png"];
 			}
 		}
-	//}
+	/
 }
 
-<<<<<<< HEAD
 - (void)launchButtonWasTapped{
-  CGSize s = [[CCDirector sharedDirector] winSize];
-  [self addRocketAtPosition:ccp(s.width/2,s.height/2) inDirection:b2Vec2(25,0) imageNamed:@"satellite1.png"];
-=======
--(void)launchButtonWasTapped{
-#warning method not implemented
-	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	[self addRocketAtPosition:ccp(s.width/2,s.height/2) inDirection:b2Vec2(25,0) imageNamed:@"satellite1.png"];
 	[launchButton removeFromSuperview];
 }
 
 -(void)userSwipedWithVector:(b2Vec2)vector{
-	
+
 	[[[CCDirector sharedDirector] view]addSubview:launchButton];
->>>>>>> Launchbutton
+
 }
 
 #pragma mark Memory management
