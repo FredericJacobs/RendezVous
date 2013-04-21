@@ -32,6 +32,14 @@ enum {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
 	
+	CCLayer *backgroundLayer = [CCLayer node];
+	
+	CCSprite *backgroundSprite = [[CCSprite alloc]initWithFile:@"bigbackground.png"];
+	backgroundSprite.scale = 1.0f;
+	
+	[backgroundLayer addChild:backgroundSprite z:0];
+	
+	[scene addChild:backgroundLayer z:0];
 	// 'layer' is an autorelease object.
 	UniverseLayer *layer = [UniverseLayer node];
 	
@@ -73,6 +81,7 @@ enum {
 
 
 -(void) initPhysics {
+	
 	
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
