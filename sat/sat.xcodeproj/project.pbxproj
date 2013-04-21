@@ -187,7 +187,6 @@
 		A5C0724A1723E15E0004217F /* iss.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072451723E15E0004217F /* iss.png */; };
 		A5C0724B1723E15E0004217F /* satellite1.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072461723E15E0004217F /* satellite1.png */; };
 		A5C0724D1723E5B20004217F /* earth-small.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C0724C1723E5B20004217F /* earth-small.png */; };
-		B6907C3D1722DE3D0070EA28 /* earth.png in Resources */ = {isa = PBXBuildFile; fileRef = B6907C3C1722DE3D0070EA28 /* earth.png */; };
 		B6907C401722F23E0070EA28 /* CCPanZoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */; };
 		B6907C421722F4260070EA28 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B6907C411722F4260070EA28 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
@@ -560,7 +559,6 @@
 		A5C072451723E15E0004217F /* iss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iss.png; path = Resources/RDVasset/iss.png; sourceTree = "<group>"; };
 		A5C072461723E15E0004217F /* satellite1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = satellite1.png; path = Resources/RDVasset/satellite1.png; sourceTree = "<group>"; };
 		A5C0724C1723E5B20004217F /* earth-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "earth-small.png"; path = "Resources/RDVasset/earth-small.png"; sourceTree = "<group>"; };
-		B6907C3C1722DE3D0070EA28 /* earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth.png; sourceTree = "<group>"; };
 		B6907C3E1722F23E0070EA28 /* CCPanZoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPanZoomController.h; sourceTree = "<group>"; };
 		B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPanZoomController.m; sourceTree = "<group>"; };
 		B6907C411722F4260070EA28 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -623,7 +621,6 @@
 		A5C0701C1722D0810004217F /* sat */ = {
 			isa = PBXGroup;
 			children = (
-				B6907C431722FBE10070EA28 /* Sprites */,
 				B6907C3E1722F23E0070EA28 /* CCPanZoomController.h */,
 				B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */,
 				A5C072271722D0850004217F /* AppDelegate.h */,
@@ -1171,14 +1168,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		B6907C431722FBE10070EA28 /* Sprites */ = {
-			isa = PBXGroup;
-			children = (
-				B6907C3C1722DE3D0070EA28 /* earth.png */,
-			);
-			name = Sprites;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1243,7 +1232,6 @@
 				A5C070361722D0820004217F /* iTunesArtwork in Resources */,
 				A5C071741722D0840004217F /* ChangeLog in Resources */,
 				A5C072371722D0850004217F /* blocks.png in Resources */,
-				B6907C3D1722DE3D0070EA28 /* earth.png in Resources */,
 				B6907C421722F4260070EA28 /* Default-568h@2x.png in Resources */,
 				A5C072471723E15E0004217F /* background.png in Resources */,
 				A5C072481723E15E0004217F /* bigbackground.png in Resources */,

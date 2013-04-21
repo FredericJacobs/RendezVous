@@ -96,7 +96,7 @@ enum {
 	_satellites = [[NSMutableArray alloc] init];
   _planets = [[NSMutableArray alloc] init];
 	
-	[self addPlanet:s.width/2 yCoord:s.height/2  radius:s.width/10 imageNamed:@"earth-small.png"];
+	[self addPlanet:s.width/2 yCoord:s.height/2  radius:s.width/10 imageNamed:@"earth.png"];
 }
 
 -(void) draw
