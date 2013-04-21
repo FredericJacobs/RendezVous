@@ -272,8 +272,40 @@ enum {
       }
     }
   
+	[self satellitesDidCrash:collidedSatellites];
   
 }
+
+
+-(void) satellitesDidCrash:(NSSet*)sats{
+	for (PhysicsSprite *sat in sats) {
+		CCParticleSun *explosion = [CCParticleSun node];
+		//self.emitter.position = ccp( size.width /2 , size.height/2 );
+		explosion.position = sat.position;
+		explosion.duration = 1;
+		explosion.gravity=CGPointZero;
+		
+		//explosion.anchorPoint = ccp(0.5f,0.5f);
+		explosion.autoRemoveOnFinish = YES;
+		explosion.texture = [[CCTextureCache sharedTextureCache ] addImage: @"4638.jpg"];
+		ccColor4F endColor = {1, 1, 1, 0};
+		//emitter.startColor = startColor;
+		explosion.endColor = endColor;
+		[self addChild:explosion z:10];
+		
+		
+		//CCParticleFire *emitter = [[CCParticleFire alloc] init];
+		//emitter.texture = [[CCTextureCache sharedTextureCache] addImage:@”particle.png”];
+		//mitter.position = ccp(340,160);
+		
+		//[self addChild:explosion];
+		//emitter.autoRemoveOnFinish = YES;
+		
+		[sat removeFromParentAndCleanup:YES];
+		[_satellites removeObject:sat];
+	}
+}
+
 
 
 #pragma mark Touch interactions
