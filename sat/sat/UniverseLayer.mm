@@ -8,7 +8,6 @@
 
 // Import the interfaces
 #import "UniverseLayer.h"
-
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
 
@@ -98,7 +97,9 @@ enum {
 	gravity.Set(0.0f, 0.0f);
 	world = new b2World(gravity);
 	
-	
+  // Create contact listener
+  _contactListener = new MyContactListener();
+  world->SetContactListener(_contactListener);
 	// Do we want to let bodies sleep?
 	world->SetAllowSleeping(true);
 	
@@ -157,9 +158,11 @@ enum {
   thePlanet->CreateFixture(&fixtureDef);
 
 	PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:planetImage];
+  sprite.type = PLANET;
 
 	sprite.position=ccp(pX/PTM_RATIO,pY/PTM_RATIO);
 	[sprite setPhysicsBody:thePlanet];
+  thePlanet->SetUserData(sprite);
 	[_planets addObject:sprite];
   [self addChild:sprite];
 	
@@ -170,6 +173,7 @@ enum {
 -(void) addRocketAtPosition:(CGPoint)p  inDirection:(b2Vec2)direction imageNamed:(NSString*)bodyImage {
   CGSize s = [[CCDirector sharedDirector] winSize];
   PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:bodyImage];
+   sprite.type = ROCKET;
   sprite.position = ccp( p.x, p.y);
   b2BodyDef bodyDef;
   bodyDef.type = b2_dynamicBody;
@@ -179,6 +183,7 @@ enum {
   body->ApplyForce(direction, center);
   [sprite setPhysicsBody:body];
   [self addChild:sprite];
+  body->SetUserData(sprite);
   self.rocket=sprite;
 }
 
@@ -188,6 +193,7 @@ enum {
     CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
   
     PhysicsSprite *sprite = [PhysicsSprite spriteWithFile:bodyImage];
+    sprite.type = SATELLITE;
     sprite.oldvel=0;
     sprite.velchange=0;
     sprite.oldDis=0;
@@ -242,9 +248,10 @@ enum {
 
 
   world->ClearForces();
-  NSMutableSet *collidedSatellites = [[NSMutableSet alloc] init];
+  
   for (PhysicsSprite *sat in _satellites){
     b2Vec2 debrisPosition=[sat getPhysicsBody]->GetWorldCenter();
+    b2CircleShape *satelliteShape=(b2CircleShape *)([sat getPhysicsBody]->GetFixtureList()->GetShape());
     for(PhysicsSprite *planet  in _planets){
       
       b2CircleShape *planetShape=(b2CircleShape *)([planet getPhysicsBody]->GetFixtureList()->GetShape());
@@ -265,46 +272,83 @@ enum {
         // This is the final formula to make the gravity weaker as we move far from the planet TODO: do we want this?
         [sat getPhysicsBody]->ApplyForce(planetDistance, [sat getPhysicsBody]->GetWorldCenter());
         
-        CGRect projectileRect = [sat boundingBox];
-        CGRect targetRects = [planet boundingBox];
-        if (CGRectIntersectsRect(projectileRect, targetRects)) {
-          [collidedSatellites addObject:sat];
-        }
+//        CGRect projectileRect = [sat boundingBox];
+//        CGRect targetRects = [planet boundingBox];
+//        if (CGRectIntersectsRect(projectileRect, targetRects)) {
+////        if([self circleIsColliding:satelliteShape withCircle:planetShape]) {
+//          [collidedSatellites addObject:sat];
+//        }
       }
     }
+  // DO collision detection
+    
+  NSSet* collidedSats=[self detectCollisions];
+
+  [self satellitesDidCrash:collidedSats];
+}
+
+-(NSSet*) detectCollisions {
+  NSMutableSet *collidedSatellites = [[NSMutableSet alloc] init];
+  std::vector<MyContact>::iterator pos;
+  for(pos = _contactListener->_contacts.begin();
+      pos != _contactListener->_contacts.end(); ++pos) {
+      MyContact contact = *pos;
+      b2Body *bodyA = contact.fixtureA->GetBody();
+      b2Body *bodyB = contact.fixtureB->GetBody();
+      if (bodyA->GetUserData() != NULL && bodyB->GetUserData() != NULL) {
+        PhysicsSprite *spriteA = (PhysicsSprite *) bodyA->GetUserData();
+        PhysicsSprite *spriteB = (PhysicsSprite *) bodyB->GetUserData();
+        if(spriteA.type==SATELLITE && spriteB.type==SATELLITE) {
+          // explode them both!
+          [collidedSatellites addObject:spriteA];
+          [collidedSatellites addObject:spriteB];
+        }
+        else if (spriteA.type==SATELLITE && spriteB.type==PLANET) {
+          //just explod the sat
+          [collidedSatellites addObject:spriteA];
+
+        }
+        else if (spriteA.type==PLANET && spriteB.type==SATELLITE) {
+          //just explod the sat
+          [collidedSatellites addObject:spriteB];
+        }
+      
+      }
+  }
+  return collidedSatellites;
   
-	[self satellitesDidCrash:collidedSatellites];
+}
+
+-(BOOL) circleIsColliding:(b2CircleShape*)circle1 withCircle:(b2CircleShape*) circle2 {
+  
+  return  pow( circle1->m_p.x-circle2->m_p.x,2 )  + pow( circle1->m_p.y-circle2->m_p.y,2 )  <  pow(circle1->m_radius +circle2->m_radius,2);
   
 }
 
 
 -(void) satellitesDidCrash:(NSSet*)sats{
 	for (PhysicsSprite *sat in sats) {
-		CCParticleSun *explosion = [CCParticleSun node];
-		//self.emitter.position = ccp( size.width /2 , size.height/2 );
+    if([_satellites containsObject:sat]) {
+      CCParticleSun *explosion = [CCParticleSun node];
+      //self.emitter.position = ccp( size.width /2 , size.height/2 );
+      
+      explosion.position = ccp([sat getPhysicsBody]->GetPosition().x*PTM_RATIO,[sat getPhysicsBody]->GetPosition().y*PTM_RATIO);
+      explosion.duration = 1;
+      explosion.gravity=CGPointZero;
+      
+      //explosion.anchorPoint = ccp(0.5f,0.5f);
+      explosion.autoRemoveOnFinish = YES;
+      explosion.texture = [[CCTextureCache sharedTextureCache ] addImage: @"4638.jpg"];
+      ccColor4F endColor = {1, 1, 1, 0};
+      //emitter.startColor = startColor;
+      explosion.endColor = endColor;
+      [self addChild:explosion z:10];
+      
+      
+      [sat removeFromParentAndCleanup:YES];
+      [_satellites removeObject:sat];
+    }
     
-		explosion.position = ccp([sat getPhysicsBody]->GetPosition().x*PTM_RATIO,[sat getPhysicsBody]->GetPosition().y*PTM_RATIO);
-		explosion.duration = 1;
-		explosion.gravity=CGPointZero;
-		
-		//explosion.anchorPoint = ccp(0.5f,0.5f);
-		explosion.autoRemoveOnFinish = YES;
-		explosion.texture = [[CCTextureCache sharedTextureCache ] addImage: @"4638.jpg"];
-		ccColor4F endColor = {1, 1, 1, 0};
-		//emitter.startColor = startColor;
-		explosion.endColor = endColor;
-		[self addChild:explosion z:10];
-		
-		
-		//CCParticleFire *emitter = [[CCParticleFire alloc] init];
-		//emitter.texture = [[CCTextureCache sharedTextureCache] addImage:@”particle.png”];
-		//mitter.position = ccp(340,160);
-		
-		//[self addChild:explosion];
-		//emitter.autoRemoveOnFinish = YES;
-		
-		[sat removeFromParentAndCleanup:YES];
-		[_satellites removeObject:sat];
 	}
 }
 
@@ -366,6 +410,7 @@ enum {
 	
 	delete m_debugDraw;
 	m_debugDraw = NULL;
+  delete _contactListener;
 	
 	[super dealloc];
 }

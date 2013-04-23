@@ -12,7 +12,7 @@
 #import "GLES-Render.h"
 #import "CCPanZoomController.h"
 #import "PhysicsSprite.h"
-
+#import "MyContactListener.h"
 //Pixel to metres ratio. Box2D uses metres as the unit for measurement.
 //This ratio defines how many pixels correspond to 1 Box2D "metre"
 //Box2D is optimized for objects of 1x1 metre therefore it makes sense
@@ -28,6 +28,7 @@
 	CCPanZoomController *_controller;
 	GLESDebugDraw *m_debugDraw;		// strong ref
 	UIButton *launchButton;
+  MyContactListener *_contactListener;
 }
 
 @property (nonatomic,strong) NSMutableArray *planets;
@@ -36,6 +37,7 @@
 @property (nonatomic,strong) PhysicsSprite *rocket;
 @property (nonatomic) BOOL doMoveLeft;
 @property CGPoint tapPoint;
+
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;
 

@@ -188,6 +188,7 @@
 		A5C0724B1723E15E0004217F /* satellite1.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C072461723E15E0004217F /* satellite1.png */; };
 		A5C0724D1723E5B20004217F /* earth-small.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C0724C1723E5B20004217F /* earth-small.png */; };
 		A5C0724F17241B400004217F /* rocket.png in Resources */ = {isa = PBXBuildFile; fileRef = A5C0724E17241B400004217F /* rocket.png */; };
+		A5C0725217242A450004217F /* MyContactListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5C0725117242A450004217F /* MyContactListener.mm */; };
 		B6907C401722F23E0070EA28 /* CCPanZoomController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */; };
 		B6907C421722F4260070EA28 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B6907C411722F4260070EA28 /* Default-568h@2x.png */; };
 		B6C961C21723FB180011AF8A /* LaunchButton.png in Resources */ = {isa = PBXBuildFile; fileRef = B6C961C11723FB180011AF8A /* LaunchButton.png */; };
@@ -563,6 +564,8 @@
 		A5C072461723E15E0004217F /* satellite1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = satellite1.png; path = Resources/RDVasset/satellite1.png; sourceTree = "<group>"; };
 		A5C0724C1723E5B20004217F /* earth-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "earth-small.png"; path = "Resources/RDVasset/earth-small.png"; sourceTree = "<group>"; };
 		A5C0724E17241B400004217F /* rocket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rocket.png; path = Resources/RDVasset/rocket.png; sourceTree = "<group>"; };
+		A5C0725017242A450004217F /* MyContactListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyContactListener.h; sourceTree = "<group>"; };
+		A5C0725117242A450004217F /* MyContactListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MyContactListener.mm; sourceTree = "<group>"; };
 		B6907C3E1722F23E0070EA28 /* CCPanZoomController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPanZoomController.h; sourceTree = "<group>"; };
 		B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPanZoomController.m; sourceTree = "<group>"; };
 		B6907C411722F4260070EA28 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -627,6 +630,8 @@
 		A5C0701C1722D0810004217F /* sat */ = {
 			isa = PBXGroup;
 			children = (
+				A5C0725017242A450004217F /* MyContactListener.h */,
+				A5C0725117242A450004217F /* MyContactListener.mm */,
 				B6907C3E1722F23E0070EA28 /* CCPanZoomController.h */,
 				B6907C3F1722F23E0070EA28 /* CCPanZoomController.m */,
 				A5C072271722D0850004217F /* AppDelegate.h */,
@@ -1413,6 +1418,7 @@
 				A5C072321722D0850004217F /* GLES-Render.mm in Sources */,
 				A5C072351722D0850004217F /* PhysicsSprite.mm in Sources */,
 				B6907C401722F23E0070EA28 /* CCPanZoomController.m in Sources */,
+				A5C0725217242A450004217F /* MyContactListener.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
