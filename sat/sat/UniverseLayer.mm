@@ -79,7 +79,9 @@ enum {
 		
 		launchButton = [UIButton buttonWithType:UIButtonTypeCustom];
 		float sizeOfButton = 80;
-		launchButton.frame = CGRectMake([[UIScreen mainScreen]bounds].size.height - sizeOfButton, [UIScreen mainScreen].bounds.size.width - sizeOfButton, sizeOfButton, sizeOfButton);
+//		launchButton.frame = CGRectMake([[UIScreen mainScreen]bounds].size.height - sizeOfButton, [UIScreen mainScreen].bounds.size.width - sizeOfButton, sizeOfButton, sizeOfButton);
+    launchButton.frame = CGRectMake(0,[UIScreen mainScreen].bounds.size.width - sizeOfButton, sizeOfButton, sizeOfButton);
+    
 		UIImage *launchButtonImage = [UIImage imageNamed:@"LaunchButton.png"];
 		[launchButton setBackgroundImage:launchButtonImage forState:UIControlStateNormal];
 		[launchButton addTarget:self action:@selector(launchButtonWasTapped) forControlEvents:UIControlEventTouchUpInside];
